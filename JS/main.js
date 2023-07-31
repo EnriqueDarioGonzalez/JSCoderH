@@ -1,43 +1,46 @@
+const Producto = function(nombre, precio, stock){
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stock = stock;
+  }
 
-function comprarCajas() {
-    let valor = 0;
-    let continuar = true;
-    let saldo =  prompt("Por favor ingrese un saldo a depositar: \n");
 
-    while(continuar) {
-        let option = prompt(`Saldo Actual: ${saldo}\n\n ¿Que producto deseas adquirir? \n1: Caja Numero 1 - $500 \n2: Caja Numero 2 - $400 \n3: Caja Numero 3 - $300 \n4: Parar de comprar`);
+  let producto1 = new Producto("Bateria", 550000, 5)
+  let producto2 = new Producto("Guitarra", 145000, 12)
+  let producto3 = new Producto("Trompeta", 180000, 4)
+  let producto4 = new Producto("Teclado", 235000, 12)
+  let producto5 = new Producto("Violin", 980000, 9)
 
-        switch(option) {
-          case "1":
-            valor = 500;
-            break;
-          case "2":
-            valor = 400;
-            break;
-          case "3":
-            valor = 300;
-            break;
-          case "4":
-            continuar = false;
-            valor = 0;
-            alert("Gracias por tu compra!");
-            break;
-          default:
-            continuar = false;
-            valor = 0;
-            alert("Opción incorrecta");
-            break;
-        }
 
-        if (saldo < valor) {
-          continuar = false;
-          alert("Se te acabó el saldo!");
+  let lista = [producto1, producto2, producto3, producto4, producto5]
 
-        } else {
-          saldo -= valor;
-        }
+
+  function filtrarProducto(){
+    let palabraClave = prompt("¿Qué producto esta buscando?")
+    let resultado = lista.filter ( (producto)=> producto.nombre.includes(palabraClave)  )
+    if (resultado.length > 0){
+      console.table(resultado)
+    }else{
+      alert("No se encontro ningun articulo con el nombre: " + palabraClave)
     }
+  }
 
+
+let boton1 = document.getElementById("filter")
+boton1.addEventListener("click", filtrarProducto)
+
+function agregarProducto() {
+  let nombre = prompt("Ingresa el nombre del producto para agregar al stock")
+  let precio = parseInt(prompt("Ingresa el precio del producto"))
+  let stock = parseInt(prompt("Ingresa la cantidad de productos adicionados al stock"))
+  if( nombre === "" || isNaN(precio)  || isNaN(stock)){
+    alert("Ingrese valores válidos")
+    return
+  }
+  let producto = new Producto(nombre,precio,stock)
+  lista.push(producto)
+  console.table(lista)
 }
 
-comprarCajas();
+let boton2 = document.getElementById("addstock")
+boton2.addEventListener("click", agregarProducto)
